@@ -42,10 +42,10 @@ pip install torch==1.6.0 numpy tqdm sacrebleu
 
 # Assignments
 
-- [] Assignment 1: Training and evaluating an NMT model
-- [] Assignment 2: ??
-- [] Assignment 3: ??
-- [] Assignment 4: ??
-- [] Assignment 5: ??
+- [ ] Assignment 1: Training and evaluating an NMT model
+- [ ] Assignment 2: ??
+- [ ] Assignment 3: ??
+- [ ] Assignment 4: ??
+- [ ] Assignment 5: ??
 
 
