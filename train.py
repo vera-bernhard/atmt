@@ -19,7 +19,7 @@ def get_args():
     parser.add_argument('--cuda', default=False, help='Use a GPU')
 
     # Add data arguments
-    parser.add_argument('--data', default='data_asg4/prepared_data', help='path to data directory')
+    parser.add_argument('--data', default='indomain/preprocessed_data/', help='path to data directory')
     parser.add_argument('--source-lang', default='fr', help='source language')
     parser.add_argument('--target-lang', default='en', help='target language')
     parser.add_argument('--max-tokens', default=None, type=int, help='maximum number of tokens in a batch')
