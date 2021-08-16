@@ -19,11 +19,11 @@ def get_args():
     parser.add_argument('--seed', default=42, type=int, help='pseudo random number generator seed')
 
     # Add data arguments
-    parser.add_argument('--data', default='data_asg4/prepared_data', help='path to data directory')
-    parser.add_argument('--checkpoint-path', default='checkpoints_asg4/checkpoint_best.pt', help='path to the model file')
+    parser.add_argument('--data', required=True, help='path to data directory')
+    parser.add_argument('--dicts', required=True, help='path to directory containing source and target dictionaries')
+    parser.add_argument('--checkpoint-path', required=True, help='path to the model file')
     parser.add_argument('--batch-size', default=None, type=int, help='maximum number of sentences in a batch')
-    parser.add_argument('--output', default='model_translations.txt', type=str,
-                        help='path to the output file destination')
+    parser.add_argument('--output', required=True, type=str, help='path to the output file destination')
     parser.add_argument('--max-len', default=100, type=int, help='maximum length of generated sequence')
 
     return parser.parse_args()
@@ -40,9 +40,9 @@ def main(args):
     utils.init_logging(args)
 
     # Load dictionaries
-    src_dict = Dictionary.load(os.path.join(args.data, 'dict.{:s}'.format(args.source_lang)))
+    src_dict = Dictionary.load(os.path.join(args.dicts, 'dict.{:s}'.format(args.source_lang)))
     logging.info('Loaded a source dictionary ({:s}) with {:d} words'.format(args.source_lang, len(src_dict)))
-    tgt_dict = Dictionary.load(os.path.join(args.data, 'dict.{:s}'.format(args.target_lang)))
+    tgt_dict = Dictionary.load(os.path.join(args.dicts, 'dict.{:s}'.format(args.target_lang)))
     logging.info('Loaded a target dictionary ({:s}) with {:d} words'.format(args.target_lang, len(tgt_dict)))
 
     # Load dataset

@@ -1,3 +1,6 @@
 __pycache__/
 *.pyc
 *.pt
+2020/
+tests/
+assignments/
