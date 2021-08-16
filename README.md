@@ -54,14 +54,18 @@ bash scripts/run_preprocessing.sh data/en-sv/infopankki/raw/
 
 ```
 python train.py \
-    --data data/en-sv/infopankki/prepared/ \
+    --data path/to/prepared/data \
     --source-lang en \
     --target-lang sv \
-    --save-dir assignments/01/checkpoints \
+    --save-dir path/to/model/checkpoints \
     --train-on-tiny # for testing purposes only
 ```
 
-Note, only use `--train-on-tiny` for testing. This will train a
+Notes:
+- `path/to/prepared/data` and `path/to/model/checkpoints`
+  are placholders, not true paths. Replace these arguments with the correct paths
+  for your system.
+- only use `--train-on-tiny` for testing. This will train a
 dummy model on the `tiny_train` split.
 
 # Evaluating a trained model
@@ -69,25 +73,25 @@ dummy model on the `tiny_train` split.
 Run inference on test set
 ```
 python translate.py \
-    --data data/en-sv/infopankki/prepared/ \
-    --dicts data/en-sv/infopankki/prepared/ \
-    --checkpoint-path assignments/01/checkpoints/checkpoint_last.pt \
-    --output assignments/01/model_translations.txt
+    --data path/to/prepared/data \
+    --dicts path/to/prepared/data \
+    --checkpoint-path path/to/model/checkpoint/file/for/loading \
+    --output path/to/output/file/model/translations
 ```
 
 Postprocess model translations
 ```
-bash scripts/postprocess.sh assignments/01/model_translations.txt assignments/01/model_translations.post.txt sv
+bash scripts/postprocess.sh path/to/output/file/model/translations path/to/postprocessed/model/translations/file en
 ```
 
 Score with SacreBLEU
 ```
-cat assignments/01/model_translations.post.txt | sacrebleu data/en-sv/infopankki/raw/test.sv
+cat path/to/postprocessed/model/translations/file | sacrebleu path/to/raw/target/test/file
 ```
 
 # Assignments
 
-- [ ] Assignment 1: Training and evaluating an NMT model
+- [x] Assignment 1: Training and evaluating an NMT model
   with in-domain and out-of-domain data
 - [ ] Assignment 2: ??
 - [ ] Assignment 3: ??
