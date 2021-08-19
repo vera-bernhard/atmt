@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 
 #########
+# WARNING simple head/tail approach - NO SHUFFLING/DEDUPLICATION
 # Example call:
 # bash scripts/extract_splits.sh ../raw_data/infopankki_raw data/en-sv/infopankki/raw/
 #########

@@ -1,4 +1,6 @@
+jupyterlab
 numpy
+rise
 sacrebleu
 torch==1.6.0
 tqdm
