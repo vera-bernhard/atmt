@@ -3378,7 +3378,7 @@ Brandsäkerhet i höghusfinska _ svenska _ engelska
 ta hänsyn till arbetsgivarens intresse .
 1860 Finland inför en egen valuta , mark
 att få ett förhandsmeddelande om reparationer .
-Kriscentret vid Lapplands mödra- och skyddshemfinska _ svenska _ engelska
+kriscentret vid Lapplands mödra- och skyddshemfinska _ svenska _ engelska
 i Finland kan också två män eller två kvinnor gifta sig med varandra .
 du kan ansöka om ett banklån för detta .
 gymnasium
@@ -3586,7 +3586,7 @@ medborgare från övriga länder måste anmäla sig personligen på TE @-@ byrå
 beakta att om du delar bostad med till exempel en vän och ni har ett gemensamt hyresavtal så anses ni höra till samma hushåll .
 läs mer : tillfälligt boende .
 Niande hör hemma endast i mycket formella situationer .
-företagsrådgivning fås på finska och svenska och åtminstone i de större städerna även på engelska .
+Företagsrådgivning fås på finska och svenska och åtminstone i de större städerna även på engelska .
 på arbetspensionsutdraget finns en uppskattning av din intjänade pension .
 från något annat land .
 på magistraten ska du visa upp originalhandlingen eller en vidimerad kopia av den .
@@ -4966,7 +4966,7 @@ du kan ansöka om Karlebystödet om den ena av föräldrarna vårdar samtliga av
 du kan kontakta Brottsofferjouren per telefon eller via chatten eller besöka servicepunkten .
 observera att alla beskickningar inte erbjuder samma tjänster .
 vid magistraten kan du få en finsk personbeteckning , om du inte fick den redan i samband med att du beviljades uppehållstillstånd eller din uppehållsrätt för EU @-@ medborgare registrerades vid Migrationsverket .
-Kriscentret Monikas hjälptelefon är avsedd för invandrarkvinnor .
+kriscentret Monikas hjälptelefon är avsedd för invandrarkvinnor .
 trafiken
 läs mer på InfoFinlands sida Nordisk medborgare .
 dra dig alltså inte för situationer där du har möjlighet att tala finska eller svenska .
@@ -5029,7 +5029,7 @@ intyget över hindersprövningen är i kraft fyra månader .
 Förfrågningar om hyresbostäder på Rovaniemi stads område kan ställas direkt till fastighetsägare eller till bostadsförmedlingar .
 ytterligare information om yrkesutbildningfinska _ svenska _ engelska
 Byråarbetare
-Klimatet i Finland är kallare än i många andra länder .
+klimatet i Finland är kallare än i många andra länder .
 Sexualhälsa
 barnen börjar i förskoleundervisningen vanligen vid sex års ålder och grundskolan vid sju års ålder .
 du blir också tvungen att betala ränta på kvarskatten efter en viss tid .
@@ -6052,7 +6052,7 @@ integrationen underlättas t.ex. av att
 linkkiÖstra Nylands rättshjälpsbyrå :
 om du inte kan något av dessa språk , ska du fråga om det är möjligt att anlita tolk när du bokar tid till tandvården .
 linkkiFFC :
-Kriscentret vid Lapplands mödra- och skyddshem
+kriscentret vid Lapplands mödra- och skyddshem
 invandrare som har bott tillräckligt länge i Finland får ålders- eller invalidpension på samma grunder som alla andra som är bosatta i Finland .
 Ruttkartor säljs i bokhandlar och på internet .
 studier i finska språket på Internetfinska _ engelska
@@ -9869,7 +9869,7 @@ barnet kan även läsa sitt eget modersmål om man har registrerat något annat 
 tfn ( 09 ) 839.23651
 i skolan får de unga hjälp av skol- och studenthälsovårdarna ( koulu- ja opiskeluterveydenhoitajat ) , skolkuratorerna ( koulukuraattorit ) och skolpsykologerna ( koulupsykologit ) .
 i hälsovårdstjänsterna vid läroanstalter ordnas också mentalvårdstjänster för studerande .
-företagsrådgivning
+Företagsrådgivning
 om du bor på hyra i ett egnahemshus , ska du ofta betala för uppvärmningen och avfallshanteringen .
 en myndig person , alltså en person som har fyllt 18 år , får själv besluta om sin religion .
 tfn 020.798.4200

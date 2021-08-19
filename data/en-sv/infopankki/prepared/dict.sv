@@ -2451,6 +2451,7 @@ legaliserat 4
 kulturministeriet 4
 fastighetsskötseln 4
 avlider 4
+kriscentret 4
 församlingarna 4
 filmerfinska 4
 klä 4
@@ -2630,7 +2631,6 @@ ekonomi 4
 baserat 4
 intresse 4
 valuta 4
-Kriscentret 4
 banklån 4
 försörjningen 4
 vita 4
@@ -2646,7 +2646,7 @@ våningen 4
 kortvarig 4
 aktuell 4
 faderskapspenningdagar 4
-företagsrådgivning 4
+Företagsrådgivning 4
 medlemmarna 4
 råkat 4
 familjefrågor 4
