@@ -92,7 +92,7 @@ cat path/to/postprocessed/model/translations/file | sacrebleu path/to/raw/target
 # Assignments
 
 - [x] Assignment 1: Training and evaluating an NMT model
-  with in-domain and out-of-domain data
+  with in-domain and out-of-domain data **Due: **
 - [ ] Assignment 2: Experiment design
 - [ ] Assignment 3: Improving a low-resource NMT system
 - [ ] Assignment 4: ??
