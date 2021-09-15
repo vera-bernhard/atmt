@@ -90,12 +90,15 @@ cat path/to/postprocessed/model/translations/file | sacrebleu path/to/raw/target
 
 # Assignments
 
+Assignments must be submitted on OLAT by 14:00 on their respective
+due dates.
+
 - [ ] Assignment 1: Training and evaluating an NMT model
-  with in-domain and out-of-domain data **DUE: 5.10.2021**
-- [ ] Assignment 2: Experiment design **DUE: 19.10.2021**
+  with in-domain and out-of-domain data **DUE: 12.10.2021**
+- [ ] Assignment 2: Experiment design **DUE: 26.10.2021**
 - [ ] Assignment 3: Improving a low-resource NMT system
-  **DUE: 9.11.2021**
-- [ ] Assignment 4: Decoding strategies - Beam Search **DUE: 30.11.2021**
-- [ ] Assignment 5: Exam preparation **DUE: 14.12.2021**
+  **DUE: 16.11.2021**
+- [ ] Assignment 4: Decoding strategies - Beam Search **DUE: 07.12.2021**
+- [ ] Assignment 5: Exam preparation **DUE: 21.12.2021**
 
 

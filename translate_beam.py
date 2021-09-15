@@ -162,7 +162,8 @@ def main(args):
                     node = nodes[i]
                     search = node.search
 
-                    # __QUESTION 4: How are "add" and "add_final" different? What would happen if we did not make this distinction?
+                    # __QUESTION 4: How are "add" and "add_final" different? 
+                    # What would happen if we did not make this distinction?
 
                     # Store the node as final if EOS is generated
                     if next_word[-1 ] == tgt_dict.eos_idx:
