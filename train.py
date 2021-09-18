@@ -101,7 +101,7 @@ def main(args):
         train_loader = \
             torch.utils.data.DataLoader(train_dataset, num_workers=1, collate_fn=train_dataset.collater,
                                         batch_sampler=BatchSampler(train_dataset, args.max_tokens, args.batch_size, 1,
-                                                                   0, shuffle=True, seed=42))
+                                                                   0, shuffle=False, seed=42))
         model.train()
         stats = OrderedDict()
         stats['loss'] = 0
@@ -124,6 +124,13 @@ def main(args):
             output, _ = model(sample['src_tokens'], sample['src_lengths'], sample['tgt_inputs'])
             loss = \
                 criterion(output.view(-1, output.size(-1)), sample['tgt_tokens'].view(-1)) / len(sample['src_lengths'])
+
+            if torch.isnan(loss).any():
+                logging.warning('Loss is NAN!')
+                print(src_dict.string(sample['src_tokens'].tolist()[0]), '---', tgt_dict.string(sample['tgt_tokens'].tolist()[0]))
+                # print()
+                # import pdb;pdb.set_trace()
+
             loss.backward()
             grad_norm = torch.nn.utils.clip_grad_norm_(model.parameters(), args.clip_norm)
             optimizer.step()
@@ -131,6 +138,7 @@ def main(args):
 
             # Update statistics for progress bar
             total_loss, num_tokens, batch_size = loss.item(), sample['num_tokens'], len(sample['src_tokens'])
+
             stats['loss'] += total_loss * len(sample['src_lengths']) / sample['num_tokens']
             stats['lr'] += optimizer.param_groups[0]['lr']
             stats['num_tokens'] += num_tokens / len(sample['src_tokens'])

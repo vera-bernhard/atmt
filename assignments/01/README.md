@@ -8,5 +8,22 @@ All data has been prepared for the experiments so you just
 need to train the model and translate the different test
 sets.
 
-Take a look at the instructions in the main README for more
-information on how to do this.
+# Train a model
+
+```
+python train.py \
+    --data data/en-sv/infopankki/prepared \
+    --source-lang sv \
+    --target-lang en \
+    --save-dir assignments/01/baseline/checkpoints
+```
+
+# Run inference
+
+```
+python translate.py \
+    --data data/en-sv/infopankki/prepared \
+    --dicts data/en-sv/infopankki/prepared \
+    --checkpoint-path assignments/01/baseline/checkpoints/checkpoint_last.pt \
+    --output assignments/01/baseline/infopankki_translations.txt
+```

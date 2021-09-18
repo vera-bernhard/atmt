@@ -628,7 +628,7 @@ du får mer information om tolktjänsterna i din kommun på rådgivningen .
 gör en skriftlig anmälan till din arbetsgivare senast två månader innan du blir moderskapsledig .
 sexuellt våld
 invånarna i Esbo kan påverka beslutsfattandet och beredning av ärenden på många olika sätt .
-Äkta par och registrerade par sambor
+äkta par och registrerade par sambor
 du får arbetslöshetsförmån under utbildningstiden .
 linkkiEuropaskolan i Helsingfors :
 giltigt ID @-@ kort eller pass
@@ -1103,7 +1103,7 @@ priser på hyresbostäder med statliga stödengelska
 för den som flyttar till Finland är det viktigt att känna till de grundläggande reglerna som gäller i arbetslivet och det finländska samhället .
 man kan till exempel prata om barnens situation i medlingen .
 medborgare i alla länder kan gifta sig i Finland .
-Äkta makar är sinsemellan likvärdiga .
+äkta makar är sinsemellan likvärdiga .
 på hälsostationerna finns vanligtvis läkarens , sjukskötarens och hälsovårdarens mottagningar .
 registreringen kan göras till exempel på besiktningsstationer , vid försäkringsbolag och hos bilhandlare .
 kom ihåg att ansöka om särskild moderskapspenning hos FPA inom fyra månader från den dag du slutar arbeta .
@@ -2061,7 +2061,7 @@ Klubbarna räcker vanligen ett par timmar .
 Finskans grammatikfinska _ svenska _ engelska _ ryska _ spanska _ tyska _ japanska
 när du har hittat ett jobb kan du ansöka om uppehållstillstånd .
 när du ska sköta ärenden vid polisens tillståndsenhet , kan du boka tid på förhand på polisens webbplats .
-Komihåglista för nya studerande
+komihåglista för nya studerande
 verksamheten i lekparkerna är avgiftsfri och öppen för alla .
 Helsingfors tingsrättfinska _ svenska _ engelska
 Ryssland erövrade Finlands område från Sverige 1808 @-@ 1809 .
@@ -3378,7 +3378,7 @@ Brandsäkerhet i höghusfinska _ svenska _ engelska
 ta hänsyn till arbetsgivarens intresse .
 1860 Finland inför en egen valuta , mark
 att få ett förhandsmeddelande om reparationer .
-kriscentret vid Lapplands mödra- och skyddshemfinska _ svenska _ engelska
+Kriscentret vid Lapplands mödra- och skyddshemfinska _ svenska _ engelska
 i Finland kan också två män eller två kvinnor gifta sig med varandra .
 du kan ansöka om ett banklån för detta .
 gymnasium
@@ -4966,7 +4966,7 @@ du kan ansöka om Karlebystödet om den ena av föräldrarna vårdar samtliga av
 du kan kontakta Brottsofferjouren per telefon eller via chatten eller besöka servicepunkten .
 observera att alla beskickningar inte erbjuder samma tjänster .
 vid magistraten kan du få en finsk personbeteckning , om du inte fick den redan i samband med att du beviljades uppehållstillstånd eller din uppehållsrätt för EU @-@ medborgare registrerades vid Migrationsverket .
-kriscentret Monikas hjälptelefon är avsedd för invandrarkvinnor .
+Kriscentret Monikas hjälptelefon är avsedd för invandrarkvinnor .
 trafiken
 läs mer på InfoFinlands sida Nordisk medborgare .
 dra dig alltså inte för situationer där du har möjlighet att tala finska eller svenska .
@@ -5029,7 +5029,7 @@ intyget över hindersprövningen är i kraft fyra månader .
 Förfrågningar om hyresbostäder på Rovaniemi stads område kan ställas direkt till fastighetsägare eller till bostadsförmedlingar .
 ytterligare information om yrkesutbildningfinska _ svenska _ engelska
 Byråarbetare
-klimatet i Finland är kallare än i många andra länder .
+Klimatet i Finland är kallare än i många andra länder .
 Sexualhälsa
 barnen börjar i förskoleundervisningen vanligen vid sex års ålder och grundskolan vid sju års ålder .
 du blir också tvungen att betala ränta på kvarskatten efter en viss tid .
@@ -6052,7 +6052,7 @@ integrationen underlättas t.ex. av att
 linkkiÖstra Nylands rättshjälpsbyrå :
 om du inte kan något av dessa språk , ska du fråga om det är möjligt att anlita tolk när du bokar tid till tandvården .
 linkkiFFC :
-kriscentret vid Lapplands mödra- och skyddshem
+Kriscentret vid Lapplands mödra- och skyddshem
 invandrare som har bott tillräckligt länge i Finland får ålders- eller invalidpension på samma grunder som alla andra som är bosatta i Finland .
 Ruttkartor säljs i bokhandlar och på internet .
 studier i finska språket på Internetfinska _ engelska
@@ -9354,7 +9354,7 @@ under moderskapsledigheten får man dock inte arbeta under de två veckor som f�
 därefter tas beslut om tjänsterna , och du kan överklaga beslutet om du inte är nöjd med de tjänster som du har beviljats .
 invandrarmän som har problem med våld kan få hjälp via tjänsten Miehen linja .
 jämlikhet och rättvisa är värden som finländarna skattar högt .
-Äkta par och registrerade par
+äkta par och registrerade par
 Telefonoperatörer i Finlandfinska
 stadigvarande flytt till Finland och stadigvarande boende i Finland
 Notera att om du har ett uppehållstillstånd som beviljats på basis av familjeband , så kan förändringar i familjeförhållandena , såsom till exempel skilsmässa , påverka ditt uppehållstillstånd .

@@ -628,7 +628,7 @@ du får mer information om tolktjänsterna i din kommun på rådgivningen .
 gör en skriftlig anmälan till din arbetsgivare senast två månader innan du blir moderskapsledig .
 sexuellt våld
 invånarna i Esbo kan påverka beslutsfattandet och beredning av ärenden på många olika sätt .
-Äkta par och registrerade par sambor
+äkta par och registrerade par sambor
 du får arbetslöshetsförmån under utbildningstiden .
 linkkiEuropaskolan i Helsingfors :
 giltigt ID @-@ kort eller pass

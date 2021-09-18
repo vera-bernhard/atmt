@@ -2250,7 +2250,6 @@ genomsnitt 4
 100 4
 vistelsen 4
 Barns 4
-Äkta 4
 Barn 4
 efterskott 4
 stöda 4
@@ -2303,6 +2302,7 @@ ansökningar 4
 löneintyg 4
 spel 4
 vaccinationerna 4
+äkta 4
 äter 4
 måltider 4
 utom 4
@@ -2451,7 +2451,6 @@ legaliserat 4
 kulturministeriet 4
 fastighetsskötseln 4
 avlider 4
-kriscentret 4
 församlingarna 4
 filmerfinska 4
 klä 4
@@ -2631,6 +2630,7 @@ ekonomi 4
 baserat 4
 intresse 4
 valuta 4
+Kriscentret 4
 banklån 4
 försörjningen 4
 vita 4
@@ -3026,6 +3026,7 @@ undervisas 3
 ogift 3
 arbetarskyddfinska 3
 Ingående 3
+komihåglista 3
 boendeservice 3
 utlänningarfinska 3
 bostadsaktiebolagets 3
@@ -3140,7 +3141,6 @@ mångsidiga 3
 förmånliga 3
 Klubbarna 3
 hittat 3
-Komihåglista 3
 finansieringsalternativ 3
 dvs. 3
 anställningsvillkoren 3
