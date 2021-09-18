@@ -6,3 +6,4 @@ tests/
 tutorials/
 train_with_bpe_dropout.py
 lstm_lexical.py
+translate_beam.py
