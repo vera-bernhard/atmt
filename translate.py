@@ -22,9 +22,9 @@ def get_args():
     parser.add_argument('--data', required=True, help='path to data directory')
     parser.add_argument('--dicts', required=True, help='path to directory containing source and target dictionaries')
     parser.add_argument('--checkpoint-path', required=True, help='path to the model file')
-    parser.add_argument('--batch-size', default=None, type=int, help='maximum number of sentences in a batch')
+    parser.add_argument('--batch-size', default=1, type=int, help='maximum number of sentences in a batch')
     parser.add_argument('--output', required=True, type=str, help='path to the output file destination')
-    parser.add_argument('--max-len', default=100, type=int, help='maximum length of generated sequence')
+    parser.add_argument('--max-len', default=128, type=int, help='maximum length of generated sequence')
 
     return parser.parse_args()
 
@@ -34,7 +34,7 @@ def main(args):
     # Load arguments from checkpoint
     torch.manual_seed(args.seed)
     state_dict = torch.load(args.checkpoint_path, map_location=lambda s, l: default_restore_location(s, 'cpu'))
-    args_loaded = argparse.Namespace(**{**vars(args), **vars(state_dict['args'])})
+    args_loaded = argparse.Namespace(**{**vars(state_dict['args']), **vars(args)})
     args_loaded.data = args.data
     args = args_loaded
     utils.init_logging(args)
@@ -50,7 +50,6 @@ def main(args):
         src_file=os.path.join(args.data, 'test.{:s}'.format(args.source_lang)),
         tgt_file=os.path.join(args.data, 'test.{:s}'.format(args.target_lang)),
         src_dict=src_dict, tgt_dict=tgt_dict)
-
     test_loader = torch.utils.data.DataLoader(test_dataset, num_workers=1, collate_fn=test_dataset.collater,
                                               batch_sampler=BatchSampler(test_dataset, 9999999,
                                                                          args.batch_size, 1, 0, shuffle=False,
