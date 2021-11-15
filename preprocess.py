@@ -97,7 +97,7 @@ def build_dictionary(filenames, tokenize=word_tokenize):
     for filename in filenames:
         with open(filename, 'r') as file:
             for line in file:
-                for symbol in word_tokenize(line.strip()):
+                for symbol in tokenize(line.strip()):
                     dictionary.add_word(symbol)
                 dictionary.add_word(dictionary.eos_word)
     return dictionary
@@ -114,7 +114,7 @@ def make_binary_dataset(input_file, output_file, dictionary, tokenize=word_token
     tokens_list = []
     with open(input_file, 'r') as inf:
         for line in inf:
-            tokens = dictionary.binarize(line.strip(), word_tokenize, append_eos, consumer=unk_consumer)
+            tokens = dictionary.binarize(line.strip(), tokenize, append_eos, consumer=unk_consumer)
             nsent, ntok = nsent + 1, ntok + len(tokens)
             tokens_list.append(tokens.numpy())
 

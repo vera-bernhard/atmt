@@ -13,6 +13,8 @@ from seq2seq.data.dictionary import Dictionary
 from seq2seq.data.dataset import Seq2SeqDataset, BatchSampler
 from seq2seq.models import ARCH_MODEL_REGISTRY, ARCH_CONFIG_REGISTRY
 
+from bpe import BPE
+
 import pdb
 
 def get_args():
@@ -70,6 +72,20 @@ def main(args):
     tgt_dict = Dictionary.load(os.path.join(args.data, 'dict.{:s}'.format(args.target_lang)))
     logging.info('Loaded a target dictionary ({:s}) with {:d} words'.format(args.target_lang, len(tgt_dict)))
 
+    # Add BPE here/ modify Dictionary?
+    bpe_src = BPE(merges=1000)
+    bpe_tgt = BPE(merges=1000)
+    src_dict = bpe_src.create_vocabulary(src_dict)
+    tgt_dict = bpe_tgt.create_vocabulary(tgt_dict)
+    logging.info('Created BPE-vocabularies for source and target')
+
+    src_file = os.path.join(args.data, '{:s}.{:s}'.format('train', args.source_lang))
+    tgt_file = os.path.join(args.data, '{:s}.{:s}'.format('train', args.target_lang))
+
+    bpe_src.apply_bpe_to_file(src_file)
+    bpe_tgt.apply_bpe_to_file(tgt_file)
+    # preprocessing.py file, vocab
+
     # Load datasets
     def load_data(split):
         src_file = os.path.join(args.data, '{:s}.{:s}'.format(split, args.source_lang))
@@ -79,8 +95,10 @@ def main(args):
             tgt_file=tgt_file,
             src_dict=src_dict, tgt_dict=tgt_dict)
         
-    train_dataset = load_data(split='train') if not args.train_on_tiny else load_data(split='tiny_train')
-    valid_dataset = load_data(split='valid')
+    #train_dataset = load_data(split='train') if not args.train_on_tiny else load_data(split='tiny_train')
+    #valid_dataset = load_data(split='valid')
+    train_dataset = load_data(split='bpe_train')
+    valid_dataset = load_data(split='bpe_valid')
 
     # Build model and optimization criterion
     model = models.build_model(args, src_dict, tgt_dict)
@@ -102,6 +120,18 @@ def main(args):
     best_validate = float('inf')
 
     for epoch in range(last_epoch + 1, args.max_epoch):
+
+        # call dropout & create new vocab
+        # droput retrun vocab
+        # aplly to file
+
+        # call preprocessing with new file and vocab (bpe class) to create pickle file
+        # preprocessing.py new_vocab, preprocessed/bpe1.en -> prepared/bpe1.en
+
+        #update train_dataset with new vocab & inputfile
+        # train_dataset = load_data('bpe')
+        # valid_dataset = load_data('bpe')
+
         train_loader = \
             torch.utils.data.DataLoader(train_dataset, num_workers=1, collate_fn=train_dataset.collater,
                                         batch_sampler=BatchSampler(train_dataset, args.max_tokens, args.batch_size, 1,
@@ -124,6 +154,8 @@ def main(args):
             if len(sample) == 0:
                 continue
             model.train()
+            #pdb.set_trace()
+
 
             output, _ = model(sample['src_tokens'], sample['src_lengths'], sample['tgt_inputs'])
             loss = \
