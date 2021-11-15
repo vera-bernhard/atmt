@@ -13,6 +13,8 @@ from seq2seq.data.dictionary import Dictionary
 from seq2seq.data.dataset import Seq2SeqDataset, BatchSampler
 from seq2seq.models import ARCH_MODEL_REGISTRY, ARCH_CONFIG_REGISTRY
 
+import pdb
+
 def get_args():
     """ Defines training-specific hyper-parameters. """
     parser = argparse.ArgumentParser('Sequence to Sequence Model')
@@ -70,11 +72,14 @@ def main(args):
 
     # Load datasets
     def load_data(split):
+        src_file = os.path.join(args.data, '{:s}.{:s}'.format(split, args.source_lang))
+        tgt_file = os.path.join(args.data, '{:s}.{:s}'.format(split, args.target_lang))
+        pdb.set_trace()
         return Seq2SeqDataset(
-            src_file=os.path.join(args.data, '{:s}.{:s}'.format(split, args.source_lang)),
-            tgt_file=os.path.join(args.data, '{:s}.{:s}'.format(split, args.target_lang)),
+            src_file=src_file,
+            tgt_file=tgt_file,
             src_dict=src_dict, tgt_dict=tgt_dict)
-
+        
     train_dataset = load_data(split='train') if not args.train_on_tiny else load_data(split='tiny_train')
     valid_dataset = load_data(split='valid')
 
