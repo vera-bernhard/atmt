@@ -79,8 +79,11 @@ def main(args):
     tgt_dict = bpe_tgt.create_vocabulary(tgt_dict)
     logging.info('Created BPE-vocabularies for source and target')
 
+    src_file = os.path.join(args.data, '{:s}.{:s}'.format('train', args.source_lang))
+    tgt_file = os.path.join(args.data, '{:s}.{:s}'.format('train', args.target_lang))
 
-    #BPE.apply_to_file(something)
+    bpe_src.apply_bpe_to_file(src_file)
+    bpe_tgt.apply_bpe_to_file(tgt_file)
     # preprocessing.py file, vocab
 
     # Load datasets
@@ -92,10 +95,10 @@ def main(args):
             tgt_file=tgt_file,
             src_dict=src_dict, tgt_dict=tgt_dict)
         
-    train_dataset = load_data(split='train') if not args.train_on_tiny else load_data(split='tiny_train')
-    valid_dataset = load_data(split='valid')
-    #train_dataset = load_data(split='bpe_train') if not args.train_on_tiny else load_data(split='tiny_train')
-    #valid_dataset = load_data(split='bpe_valid')
+    #train_dataset = load_data(split='train') if not args.train_on_tiny else load_data(split='tiny_train')
+    #valid_dataset = load_data(split='valid')
+    train_dataset = load_data(split='bpe_train')
+    valid_dataset = load_data(split='bpe_valid')
 
     # Build model and optimization criterion
     model = models.build_model(args, src_dict, tgt_dict)

@@ -9,6 +9,22 @@ class BPE():
         self.eow = '</w>'
         self.space_words = []
 
+    def update_spacewords(self, char1, char2):
+        # update space_words
+        space_words = []
+        for word in self.space_words:
+            o = -1
+            now_test = ''
+            for char in word:
+                o += 1
+                prev_test = now_test
+                now_test = word[o]
+
+                if prev_test == char1 and now_test == char2:
+                    word[o:o + 2] = [''.join(word[o:o + 2])]
+            space_words.append(word)
+        return space_words
+
     def create_vocabulary(self, vocabulary: Dictionary):
         '''create bpe-vocabulary from existing word-vocabulary
         '''
@@ -40,11 +56,12 @@ class BPE():
         # merge pairs
         for a in range(self.merges):
             # look for highest frequency
+            print(max(pairs, key=pairs.get))
             char1, char2 = max(pairs, key=pairs.get)
             print(char1, char2)
             new_pair = char1 + char2
             new_count = pairs[char1, char2]
-            print(new_count)
+            print(new_pair)
             #add new pair to vocabulary
             self.vocabulary.add_word(new_pair, new_count)
             #update vocabulary
@@ -56,20 +73,7 @@ class BPE():
             self.vocabulary.counts[char1_idx] = char1_count - new_count
             self.vocabulary.counts[char2_idx] = char2_count - new_count
 
-            #update space_words
-            space_words = []
-            for word in self.space_words:
-                o = -1
-                now_test=''
-                for char in word:
-                    o += 1
-                    prev_test = now_test
-                    now_test = word[o]
-
-                    if prev_test == char1 and now_test == char2:
-                        word[o:o+2] = [''.join(word[o:o+2])]
-                space_words.append(word)
-            self.space_words = space_words
+            self.space_words = self.update_spacewords(char1, char2)
 
             #update pairs
             pairs = defaultdict(int)
@@ -81,18 +85,26 @@ class BPE():
 
         return self.vocabulary
 
-    def make_eow_tag(self, word):
-        pass
 
-    def apply_bpe_to_file(self, file, vocabulary):
+    def apply_bpe_to_file(self, input_file):
         '''return file with applied bpe segmanetation with eow tag and whitespace between bp
         return: preprocessed/train.en -> preprocessed/bpe1_train.en
                 preprocessed/bpe1_train.en -> preprocessed/bpe2_train.en
         '''
-        pass
+
+        with open(input_file, 'r') as f:
+            data = f.readlines()
+
+        output_file = 'bpe_' + input_file
+
+        with open(output_file, 'w') as o:
+            for line in data:
+                line = self.bpe_segmentation(line, self.vocab)
+                o.write(line)
+
 
     def bpe_segmentation(self, string, vocab):
-        pass
+
 
     def dropout(self, probability=0.5):
         pass
