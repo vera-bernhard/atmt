@@ -5,25 +5,18 @@ from collections import defaultdict
 class BPE():
     def __init__(self, merges=2000):
         self.merges = merges
-        self.vocabulary = Dictionary()
+        self.bpe_vocabulary = Dictionary()
         self.eow = '</w>'
         self.space_words = []
 
     def update_spacewords(self, char1, char2):
         # update space_words
-        space_words = []
-        for word in self.space_words:
-            o = -1
-            now_test = ''
-            for char in word:
-                o += 1
-                prev_test = now_test
-                now_test = word[o]
-
-                if prev_test == char1 and now_test == char2:
-                    word[o:o + 2] = [''.join(word[o:o + 2])]
-            space_words.append(word)
-        return space_words
+        for index, word in enumerate(self.space_words):
+            for number, char in enumerate(word):
+                if number < len(word):
+                    if word[number] == char1 and word[number+1] == char2:
+                        word[number:number + 2] = [''.join(word[number:number + 2])]
+            self.space_words[index] = word
 
     def create_vocabulary(self, vocabulary: Dictionary):
         '''create bpe-vocabulary from existing word-vocabulary
@@ -49,9 +42,9 @@ class BPE():
             # add each single character to vocabulary with count
             # create pair-dictionary with frequencies
             for y in range(len(word)-1):
-                self.vocabulary.add_word(word[y], count)
+                self.bpe_vocabulary.add_word(word[y], count)
                 pairs[word[y], word[y+1]] += count
-            self.vocabulary.add_word(word[-1], count)
+            self.bpe_vocabulary.add_word(word[-1], count)
 
         # merge pairs
         for a in range(self.merges):
@@ -63,17 +56,15 @@ class BPE():
             new_count = pairs[char1, char2]
             print(new_pair)
             #add new pair to vocabulary
-            self.vocabulary.add_word(new_pair, new_count)
+            self.bpe_vocabulary.add_word(new_pair, new_count)
             #update vocabulary
-            char1_idx = self.vocabulary.word2idx[char1]
-            char1_count = self.vocabulary.counts[char1_idx]
-            char2_idx = self.vocabulary.word2idx[char2]
-            char2_count = self.vocabulary.counts[char2_idx]
+            char1_count = self.bpe_vocabulary.counts[self.bpe_vocabulary.word2idx[char1]]
+            char2_count = self.bpe_vocabulary.counts[self.bpe_vocabulary.word2idx[char2]]
 
-            self.vocabulary.counts[char1_idx] = char1_count - new_count
-            self.vocabulary.counts[char2_idx] = char2_count - new_count
+            self.bpe_vocabulary.counts[self.bpe_vocabulary.word2idx[char1]] = char1_count - new_count
+            self.bpe_vocabulary.counts[self.bpe_vocabulary.word2idx[char2]] = char2_count - new_count
 
-            self.space_words = self.update_spacewords(char1, char2)
+            self.update_spacewords(char1, char2)
 
             #update pairs
             pairs = defaultdict(int)
@@ -83,7 +74,7 @@ class BPE():
                 for j in range(len(word) - 1):
                     pairs[word[j], word[j + 1]] += count
 
-        return self.vocabulary
+        return self.bpe_vocabulary
 
 
     def apply_bpe_to_file(self, input_file):
@@ -104,8 +95,7 @@ class BPE():
 
 
     def bpe_segmentation(self, string, vocab):
-
+        pass
 
     def dropout(self, probability=0.5):
         pass
-
