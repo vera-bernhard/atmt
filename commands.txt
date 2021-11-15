@@ -9,6 +9,19 @@ Remark, I created folders in 03
             -- tiny
             -- all
 
+Preprocess
+--------------------------------
+according to exercise description the preprocessed as follows:
+
+python preprocess.py \
+    --source-lang fr \
+    --target-lang en \
+    --num-words-src 4000 \
+    --threshold-src 1 \
+    --dest-dir <tobereplaced> \
+    --vocab-src <tobereplaced> \
+    --vocab-trg <tobereplaced>
+
 Train
 --------------------------------
 
