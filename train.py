@@ -73,9 +73,12 @@ def main(args):
     logging.info('Loaded a target dictionary ({:s}) with {:d} words'.format(args.target_lang, len(tgt_dict)))
 
     # Add BPE here/ modify Dictionary?
-    #BPE = BPE()
-    #src_dict = BPE.create_vocabulary(src_dict)
-    #tgt_dict = BPE.create_vocabulary(tgt_dict)
+    bpe_src = BPE(merges=1000)
+    bpe_tgt = BPE(merges=1000)
+    src_dict = bpe_src.create_vocabulary(src_dict)
+    tgt_dict = bpe_tgt.create_vocabulary(tgt_dict)
+    logging.info('Created BPE-vocabularies for source and target')
+
 
     #BPE.apply_to_file(something)
     # preprocessing.py file, vocab
@@ -148,7 +151,7 @@ def main(args):
             if len(sample) == 0:
                 continue
             model.train()
-            pdb.set_trace()
+            #pdb.set_trace()
 
 
             output, _ = model(sample['src_tokens'], sample['src_lengths'], sample['tgt_inputs'])
