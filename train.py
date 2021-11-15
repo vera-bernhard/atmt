@@ -64,15 +64,6 @@ def main(args):
 
     utils.init_logging(args)
 
-    def make_bpe_dict(merges=1000):
-        pass
-
-    def dropout(probability=0.5):
-        pass
-
-    def bpe_segmentation(vocab):
-        pass
-
     # Load dictionaries
     src_dict = Dictionary.load(os.path.join(args.data, 'dict.{:s}'.format(args.source_lang)))
     logging.info('Loaded a source dictionary ({:s}) with {:d} words'.format(args.source_lang, len(src_dict)))
@@ -85,7 +76,6 @@ def main(args):
     def load_data(split):
         src_file = os.path.join(args.data, '{:s}.{:s}'.format(split, args.source_lang))
         tgt_file = os.path.join(args.data, '{:s}.{:s}'.format(split, args.target_lang))
-        pdb.set_trace()
         return Seq2SeqDataset(
             src_file=src_file,
             tgt_file=tgt_file,
@@ -114,7 +104,18 @@ def main(args):
     best_validate = float('inf')
 
     for epoch in range(last_epoch + 1, args.max_epoch):
-        # Add bpe-dropout here/reload somehow vocab?
+
+        # call dropout & create new vocab
+        # droput retrun vocab
+        # aplly to file
+
+        # call preprocessing with new file and vocab (bpe class) to create pickle file
+        # preprocessing.py new_vocab, preprocessed/bpe1.en -> prepared/bpe1.en
+
+        #update train_dataset with new vocab & inputfile
+        # train_dataset = load_data('bpe')
+        # valid_dataset = load_data('bpe')
+
         train_loader = \
             torch.utils.data.DataLoader(train_dataset, num_workers=1, collate_fn=train_dataset.collater,
                                         batch_sampler=BatchSampler(train_dataset, args.max_tokens, args.batch_size, 1,
@@ -137,6 +138,8 @@ def main(args):
             if len(sample) == 0:
                 continue
             model.train()
+            pdb.set_trace()
+
 
             output, _ = model(sample['src_tokens'], sample['src_lengths'], sample['tgt_inputs'])
             loss = \
