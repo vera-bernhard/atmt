@@ -74,7 +74,6 @@ def main(args):
     def load_data(split):
         src_file = os.path.join(args.data, '{:s}.{:s}'.format(split, args.source_lang))
         tgt_file = os.path.join(args.data, '{:s}.{:s}'.format(split, args.target_lang))
-        pdb.set_trace()
         return Seq2SeqDataset(
             src_file=src_file,
             tgt_file=tgt_file,

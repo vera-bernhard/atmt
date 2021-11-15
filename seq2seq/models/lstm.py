@@ -223,10 +223,12 @@ class LSTMDecoder(Seq2SeqDecoder):
 
         self.use_lexical_model = use_lexical_model
         if self.use_lexical_model:
-            # __LEXICAL: Add parts of decoder architecture corresponding to the LEXICAL MODEL here
-            pass
-            # TODO: --------------------------------------------------------------------- /CUT
-
+            # two hidden layers for the lexical model FFNN to train jointly
+            # hidden layer with skip connection
+            self.context_embeddings = nn.Linear(embed_dim, embed_dim, bias=False)
+            # projection to size of dictionary
+            self.lexicon_projection = nn.Linear(embed_dim, len(dictionary)) 
+           
     def forward(self, tgt_inputs, encoder_out, incremental_state=None):
         """ Performs the forward pass through the instantiated model. """
         # Optionally, feed decoder input token-by-token
@@ -290,10 +292,13 @@ class LSTMDecoder(Seq2SeqDecoder):
                 attn_weights[:, j, :] = step_attn_weights
 
                 if self.use_lexical_model:
-                    # __LEXICAL: Compute and collect LEXICAL MODEL context vectors here
-                    # TODO: --------------------------------------------------------------------- CUT
-                    pass
-                    # TODO: --------------------------------------------------------------------- /CUT
+                    # [1, 3]
+                    attention_weights = step_attn_weights
+                    # [3, 1, 64] --> [3, 64]
+                    source_embeddings = src_embeddings.squeeze()
+                    avg_source_word_embeddings = torch.tanh(torch.matmul(attention_weights, source_embeddings))
+                    lexical_contexts.append(torch.tanh(self.context_embeddings(avg_source_word_embeddings)) + avg_source_word_embeddings)
+                
 
             input_feed = F.dropout(input_feed, p=self.dropout_out, training=self.training)
             rnn_outputs.append(input_feed)
@@ -312,11 +317,11 @@ class LSTMDecoder(Seq2SeqDecoder):
         decoder_output = self.final_projection(decoder_output)
 
         if self.use_lexical_model:
-            # __LEXICAL: Incorporate the LEXICAL MODEL into the prediction of target tokens here
-            pass
-            # TODO: --------------------------------------------------------------------- /CUT
-
-
+            # Incorporate the LEXICAL MODEL into the prediction of target tokens here
+            # lexical_context, list of 3 x [1, 64] tensors --> [1, 3, 64] tensor
+            lexical_contexts = torch.cat(lexical_contexts, dim=0).view(batch_size, tgt_time_steps, self.embed_dim)
+            decoder_output += self.lexicon_projection(lexical_contexts)
+            
         return decoder_output, attn_weights
 
 

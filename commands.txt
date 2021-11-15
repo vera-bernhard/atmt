@@ -41,6 +41,15 @@ python train.py \
  --target-lang en \
  --save-dir assignments/03/vera/checkpoints/all
 
+# train on tiny dataset, use lexical model and save checkpoints
+python train.py \
+ --data data/en-fr/prepared \
+ --source-lang fr \
+ --target-lang en \
+ --save-dir assignments/03/vera/checkpoints/tiny \
+ --decoder-use-lexical-model True
+
+
 Translate
 --------------------------------
 # translate test with checkpoint trained on tiny
