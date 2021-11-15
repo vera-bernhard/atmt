@@ -64,11 +64,22 @@ def main(args):
 
     utils.init_logging(args)
 
+    def make_bpe_dict(merges=1000):
+        pass
+
+    def dropout(probability=0.5):
+        pass
+
+    def bpe_segmentation(vocab):
+        pass
+
     # Load dictionaries
     src_dict = Dictionary.load(os.path.join(args.data, 'dict.{:s}'.format(args.source_lang)))
     logging.info('Loaded a source dictionary ({:s}) with {:d} words'.format(args.source_lang, len(src_dict)))
     tgt_dict = Dictionary.load(os.path.join(args.data, 'dict.{:s}'.format(args.target_lang)))
     logging.info('Loaded a target dictionary ({:s}) with {:d} words'.format(args.target_lang, len(tgt_dict)))
+    # Add BPE here/ modify Dictionary?
+    # make eow tag
 
     # Load datasets
     def load_data(split):
@@ -103,6 +114,7 @@ def main(args):
     best_validate = float('inf')
 
     for epoch in range(last_epoch + 1, args.max_epoch):
+        # Add bpe-dropout here/reload somehow vocab?
         train_loader = \
             torch.utils.data.DataLoader(train_dataset, num_workers=1, collate_fn=train_dataset.collater,
                                         batch_sampler=BatchSampler(train_dataset, args.max_tokens, args.batch_size, 1,
