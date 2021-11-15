@@ -47,6 +47,7 @@ python train.py \
  --source-lang fr \
  --target-lang en \
  --save-dir assignments/03/vera/checkpoints/tiny \
+ --train-on-tiny \
  --decoder-use-lexical-model True
 
 
