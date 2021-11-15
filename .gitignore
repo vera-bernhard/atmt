@@ -8,7 +8,7 @@ tutorials/
 # files for assignment 3
 train_with_bpe_dropout.py
 lstm_lexical.py
-assignments/03/
+
 
 # files for assignment 4
 assignments/04/
@@ -17,7 +17,7 @@ translate_beam.py
 translate_mbr.py
 translate_div_beam.py
 
-### VirtualEnv ###
+### venv ###
 # Virtualenv
 # http://iamzed.com/2009/05/07/a-primer-on-virtualenv/
 .Python
@@ -29,7 +29,9 @@ translate_div_beam.py
 [Ss]cripts
 pyvenv.cfg
 .venv
-pip-selfcheck.json
+pip-selfcheck.
+
+ex3_env/
 
 ### VisualStudioCode ###
 .vscode/*
@@ -50,5 +52,3 @@ pip-selfcheck.json
 # Support for Project snippet scope
 !.vscode/*.code-snippets
 
-.vscode/
-ex3_env/
