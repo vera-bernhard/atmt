@@ -13,6 +13,8 @@ from seq2seq.data.dictionary import Dictionary
 from seq2seq.data.dataset import Seq2SeqDataset, BatchSampler
 from seq2seq.models import ARCH_MODEL_REGISTRY, ARCH_CONFIG_REGISTRY
 
+from bpe import BPE
+
 import pdb
 
 def get_args():
@@ -69,8 +71,14 @@ def main(args):
     logging.info('Loaded a source dictionary ({:s}) with {:d} words'.format(args.source_lang, len(src_dict)))
     tgt_dict = Dictionary.load(os.path.join(args.data, 'dict.{:s}'.format(args.target_lang)))
     logging.info('Loaded a target dictionary ({:s}) with {:d} words'.format(args.target_lang, len(tgt_dict)))
+
     # Add BPE here/ modify Dictionary?
-    # make eow tag
+    #BPE = BPE()
+    #src_dict = BPE.create_vocabulary(src_dict)
+    #tgt_dict = BPE.create_vocabulary(tgt_dict)
+
+    #BPE.apply_to_file(something)
+    # preprocessing.py file, vocab
 
     # Load datasets
     def load_data(split):
@@ -83,6 +91,8 @@ def main(args):
         
     train_dataset = load_data(split='train') if not args.train_on_tiny else load_data(split='tiny_train')
     valid_dataset = load_data(split='valid')
+    #train_dataset = load_data(split='bpe_train') if not args.train_on_tiny else load_data(split='tiny_train')
+    #valid_dataset = load_data(split='bpe_valid')
 
     # Build model and optimization criterion
     model = models.build_model(args, src_dict, tgt_dict)
