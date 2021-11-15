@@ -99,3 +99,13 @@ class BPE():
 
     def dropout(self, probability=0.5):
         pass
+
+
+
+
+if __name__ == '__main__':
+    src_dict = Dictionary.load('data/en-fr/prepared/dict.fr')
+    tgt_dict = Dictionary.load('data/en-fr/prepared/dict.en')
+    
+    myBPE = BPE()
+    myBPE.create_vocabulary(src_dict)
