@@ -90,7 +90,7 @@ class BPE():
 
         with open(output_file, 'w') as o:
             for line in data:
-                line = self.bpe_segmentation(line, self.vocab)
+                line = self.bpe_segmentation(line, self.bpe_vocabulary)
                 o.write(line)
 
 
