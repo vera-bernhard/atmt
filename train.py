@@ -75,32 +75,31 @@ def main(args):
     # Add BPE here/ modify Dictionary?
     bpe_src = BPE(merges=1000)
     bpe_tgt = BPE(merges=1000)
-    src_dict = bpe_src.create_vocabulary(src_dict)
-    tgt_dict = bpe_tgt.create_vocabulary(tgt_dict)
+    src_dict_path, src_dict = bpe_src.create_vocabulary(src_dict, 'data/en-fr/preprocessed/bpe/dict.fr')
+    tgt_dict_path, tgt_dict = bpe_tgt.create_vocabulary(tgt_dict, 'data/en-fr/preprocessed/bpe/dict.fr')
     logging.info('Created BPE-vocabularies for source and target')
 
     src_file = 'data/en-fr/preprocessed/train.fr'
     tgt_file = 'data/en-fr/preprocessed/train.en'
 
-    bpe_src.apply_bpe_to_file('data/en-fr/preprocessed/train.fr', src_dict)
-    bpe_src.apply_bpe_to_file('data/en-fr/preprocessed/tiny_train.fr', src_dict)
-    bpe_src.apply_bpe_to_file('data/en-fr/preprocessed/valid.fr', src_dict)
-    bpe_tgt.apply_bpe_to_file('data/en-fr/preprocessed/train.en', tgt_dict)
-    bpe_tgt.apply_bpe_to_file('data/en-fr/preprocessed/tiny_train.en', tgt_dict)
-    bpe_tgt.apply_bpe_to_file('data/en-fr/preprocessed/valid.en', tgt_dict)
+    src_train = bpe_src.apply_bpe_to_file('data/en-fr/preprocessed/train.fr', src_dict)
+    src_tiny_train = bpe_src.apply_bpe_to_file('data/en-fr/preprocessed/tiny_train.fr', src_dict)
+    src_valid = bpe_src.apply_bpe_to_file('data/en-fr/preprocessed/valid.fr', src_dict)
+    tgt_train = bpe_tgt.apply_bpe_to_file('data/en-fr/preprocessed/train.en', tgt_dict)
+    tgt_tiny_train = bpe_tgt.apply_bpe_to_file('data/en-fr/preprocessed/tiny_train.en', tgt_dict)
+    tgt_valid = bpe_tgt.apply_bpe_to_file('data/en-fr/preprocessed/valid.en', tgt_dict)
 
-    #TO DO: make sure that this is done on the right files...
-    os.system('python preprocess.py --source-lang fr --target-lang en --dest-dir data/en-de/preprocessed/bpe/ --train_prefix = /data/en-fr/preprocessed/bpe/train --tiny_train_prefix = /data/en-fr/preprocessed/bpe/tiny_train --valid_prefix /data/en-fr/preprocessed/bpe/valid --vocab-src src_dict --vocab-trg tgt_dict')
+    os.system('python preprocess.py --source-lang fr --target-lang en --dest-dir data/en-de/preprocessed/bpe/ --train-prefix /data/en-fr/preprocessed/bpe/train --tiny-train-prefix /data/en-fr/preprocessed/bpe/tiny_train --valid-prefix /data/en-fr/preprocessed/bpe/valid --vocab-src src_dict_path --vocab-trg tgt_dict_path')
 
     # Load datasets
-    def load_data(split):
+    def load_data(src_file, tgt_file, src_dict, tgt_dict):
         return Seq2SeqDataset(
-            src_file=os.path.join(args.data, '{:s}.{:s}'.format(split, args.source_lang)),
-            tgt_file=os.path.join(args.data, '{:s}.{:s}'.format(split, args.target_lang)),
+            src_file=src_file,
+            tgt_file=tgt_file,
             src_dict=src_dict, tgt_dict=tgt_dict)
 
-    train_dataset = load_data(split='train') if not args.train_on_tiny else load_data(split='tiny_train')
-    valid_dataset = load_data(split='valid')
+    #train_dataset = load_data(split='train') if not args.train_on_tiny else load_data(split='tiny_train')
+    #valid_dataset = load_data(split='valid')
     #train_dataset = load_data(split='bpe_train')
     #valid_dataset = load_data(split='bpe_valid')
 
@@ -129,9 +128,10 @@ def main(args):
         new_vocab_src = bpe_src.dropout()
         new_vocab_tgt = bpe_tgt.dropout()
 
+
         # create new trainingdata
-        src_bpe_file = bpe_src.apply_bpe_to_file(src_file, new_vocab_src)
-        src_bpe_file = bpe_tgt.apply_bpe_to_file(tgt_file, new_vocab_tgt)
+        src_ = bpe_src.apply_bpe_to_file(src_file, new_vocab_src)
+        tgt_ = bpe_tgt.apply_bpe_to_file(tgt_file, new_vocab_tgt)
 
         # TO DO make sure right file is done
         os.system('python preprocess.py \
@@ -141,9 +141,8 @@ def main(args):
             --vocab-src src_dict \
             --vocab-trg tgt_dict')
 
-        # TO DO right name
-        train_dataset = load_data('bpe') if not args.train_on_tiny else load_data(split='tiny_train')
-        valid_dataset = load_data('bpe')
+        train_dataset = load_data(src_file, tgt_file, new_vocab_src, new_vocab_tgt)
+        valid_dataset = load_data(src_file, tgt_file, new_vocab_src, new_vocab_tgt)
 
         train_loader = \
             torch.utils.data.DataLoader(train_dataset, num_workers=1, collate_fn=train_dataset.collater,
