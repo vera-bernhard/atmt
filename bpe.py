@@ -1,6 +1,7 @@
 from seq2seq.data.dictionary import Dictionary
 from collections import Counter
 from collections import defaultdict
+import re
 
 class BPE():
     def __init__(self, merges=2000):
@@ -94,8 +95,42 @@ class BPE():
                 o.write(line)
 
 
-    def bpe_segmentation(self, string, vocab):
-        pass
+    def bpe_segmentation(self, sent: str) -> str:
+        sorted_pbe_voc = sorted(self.bpe_vocabulary.words, key=len)
+
+        def split_with_bpe_dict(word: str):
+            if len(word) <= 1:
+                return word
+            
+            for pair in reversed(sorted_pbe_voc):
+                if pair in word:
+                    word_replaced = re.sub(pair, '<'+pair+'>', word)
+                    left, right = word_replaced.split('<'+pair+'>')
+                    encoded_left = split_with_bpe_dict(left)
+                    encoded_right = split_with_bpe_dict(right)
+                    return [encoded_left, pair, encoded_right]
+                
+            
+        result_sent = []  
+        for word in sent.split(' '):
+            word = word + '</w>'
+            word_bpe = ' '.join(list(self.flatten(split_with_bpe_dict(word))))
+            result_sent.append(word_bpe)
+            
+        result_sent = ' '.join(result_sent)
+        result_sent = re.sub(' +', ' ', result_sent).strip()
+        
+        return result_sent
+        
+
+        # remove several and trailing whitespaces (beginning and end)
+    @classmethod
+    def flatten(cls, L):
+        for l in L:
+            if isinstance(l, list):
+                yield from cls.flatten(l)
+            else:
+                yield l
 
     def dropout(self, probability=0.5):
         pass
@@ -109,3 +144,4 @@ if __name__ == '__main__':
     
     myBPE = BPE()
     myBPE.create_vocabulary(src_dict)
+    myBPE.bpe_segmentation('je n&apos; ai jamais imaginé un seul instant que je serais désigné pour une fouille au corps complète .')
