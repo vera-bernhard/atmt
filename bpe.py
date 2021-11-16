@@ -1,7 +1,10 @@
 from seq2seq.data.dictionary import Dictionary
-from collections import Counter
 from collections import defaultdict
+<<<<<<< HEAD
 import re
+=======
+import random
+>>>>>>> 97369633690c48ae73f4a8a5d796de7222149dac
 
 class BPE():
     def __init__(self, merges=2000):
@@ -30,15 +33,14 @@ class BPE():
         # separate all characters, add eow tag
         for word in words:
             temp = ''
-            for e in range(len(word)-1):
-                char = word[e]
-                temp = temp + char + ' '
+            for index, char in enumerate(word):
+                if index < len(word):
+                    temp = temp + char + ' '
             temp = temp + word[-1] + self.eow
             space_words.append(temp.split())
         self.space_words = space_words
 
-        for i in range(len(self.space_words)):
-            word = self.space_words[i]
+        for i, word in enumerate(self.space_words):
             count = counts[i]
             # add each single character to vocabulary with count
             # create pair-dictionary with frequencies
@@ -50,12 +52,9 @@ class BPE():
         # merge pairs
         for a in range(self.merges):
             # look for highest frequency
-            print(max(pairs, key=pairs.get))
             char1, char2 = max(pairs, key=pairs.get)
-            print(char1, char2)
             new_pair = char1 + char2
             new_count = pairs[char1, char2]
-            print(new_pair)
             #add new pair to vocabulary
             self.bpe_vocabulary.add_word(new_pair, new_count)
             #update vocabulary
@@ -69,8 +68,7 @@ class BPE():
 
             #update pairs
             pairs = defaultdict(int)
-            for u in range(len(self.space_words)):
-                word = self.space_words[u]
+            for u, word in enumerate(self.space_words):
                 count = counts[u]
                 for j in range(len(word) - 1):
                     pairs[word[j], word[j + 1]] += count
@@ -78,21 +76,23 @@ class BPE():
         return self.bpe_vocabulary
 
 
-    def apply_bpe_to_file(self, input_file):
+    def apply_bpe_to_file(self, input_file, vocabulary):
         '''return file with applied bpe segmanetation with eow tag and whitespace between bp
         return: preprocessed/train.en -> preprocessed/bpe1_train.en
                 preprocessed/bpe1_train.en -> preprocessed/bpe2_train.en
         '''
 
+        print(input_file)
         with open(input_file, 'r') as f:
             data = f.readlines()
-
         output_file = 'bpe_' + input_file
 
         with open(output_file, 'w') as o:
             for line in data:
-                line = self.bpe_segmentation(line, self.bpe_vocabulary)
+                line = self.bpe_segmentation(line, vocabulary)
                 o.write(line)
+
+        return output_file
 
 
     def bpe_segmentation(self, sent: str) -> str:
@@ -133,7 +133,18 @@ class BPE():
                 yield l
 
     def dropout(self, probability=0.5):
-        pass
+        vocab = self.bpe_vocabulary
+        new_vocab = Dictionary()
+        number_random_samples = int(len(vocab) * probability)
+
+        randomlist = random.sample(range(0, len(self.bpe_vocabulary)), number_random_samples)
+
+        for element in random_list:
+            word = self.bpe_vocabulary.words[element]
+            count = self.bpe_vocabulary.counts[element]
+
+            new_vocab.add_word(word, count)
+        return new_vocab
 
 
 
