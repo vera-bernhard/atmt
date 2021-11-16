@@ -82,11 +82,15 @@ def main(args):
     src_file = 'data/en-fr/preprocessed/train.fr'
     tgt_file = 'data/en-fr/preprocessed/train.en'
 
-    src_bpe_file = bpe_src.apply_bpe_to_file(src_file, src_dict)
-    tgt_bpe_file = bpe_tgt.apply_bpe_to_file(tgt_file, tgt_dict)
+    bpe_src.apply_bpe_to_file('data/en-fr/preprocessed/train.fr', src_dict)
+    bpe_src.apply_bpe_to_file('data/en-fr/preprocessed/tiny_train.fr', src_dict)
+    bpe_src.apply_bpe_to_file('data/en-fr/preprocessed/valid.fr', src_dict)
+    bpe_tgt.apply_bpe_to_file('data/en-fr/preprocessed/train.en', tgt_dict)
+    bpe_tgt.apply_bpe_to_file('data/en-fr/preprocessed/tiny_train.en', tgt_dict)
+    bpe_tgt.apply_bpe_to_file('data/en-fr/preprocessed/valid.en', tgt_dict)
 
     #TO DO: make sure that this is done on the right files...
-    os.system('python preprocess.py --source-lang fr --target-lang en --dest-dir data/en-de/preprocessed/bpe/ --vocab-src src_dict --vocab-trg tgt_dict')
+    os.system('python preprocess.py --source-lang fr --target-lang en --dest-dir data/en-de/preprocessed/bpe/ --train_prefix = /data/en-fr/preprocessed/bpe/train --tiny_train_prefix = /data/en-fr/preprocessed/bpe/tiny_train --valid_prefix /data/en-fr/preprocessed/bpe/valid --vocab-src src_dict --vocab-trg tgt_dict')
 
     # Load datasets
     def load_data(split):

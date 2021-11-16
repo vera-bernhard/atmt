@@ -2,7 +2,6 @@ from seq2seq.data.dictionary import Dictionary
 from collections import defaultdict
 import re
 import random
-import pdb
 
 class BPE():
     def __init__(self, merges=2000):
@@ -80,10 +79,12 @@ class BPE():
                 preprocessed/bpe1_train.en -> preprocessed/bpe2_train.en
         '''
 
-        print(input_file)
+        path = 'data/en-fr/preprocessed/bpe/'
         with open(input_file, 'r') as f:
             data = f.readlines()
-        output_file = input_file + '_bpe'
+
+        file_name = re.match(r'data/en-fr/preprocessed/(.+?$)', input_file).group(1)
+        output_file =path + file_name
 
         with open(output_file, 'w') as o:
             for line in data:
@@ -97,14 +98,14 @@ class BPE():
 
     def bpe_segmentation(self, sent: str, vocab: Dictionary) -> str:
         '''Encodes a sentence given a bpe dictionary'''
-        sorted_pbe_voc = sorted(vocab.words, key=len)
+        sorted_bpe_voc = sorted(vocab.words, key=len)
 
         def split_with_bpe_dict(word: str):
             if len(word) <= 1:
                 return word
             
             # look at longest byte pairs first
-            for pair in reversed(sorted_pbe_voc):
+            for pair in reversed(sorted_bpe_voc):
                 if word == pair:
                     return ['', word, '']
                 elif pair in word:
