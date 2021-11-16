@@ -19,7 +19,7 @@ class BPE():
                         word[number:number + 2] = [''.join(word[number:number + 2])]
             self.space_words[index] = word
 
-    def create_vocabulary(self, vocabulary: Dictionary):
+    def create_vocabulary(self, vocabulary: Dictionary, outputfile):
         '''create bpe-vocabulary from existing word-vocabulary
         '''
         words = vocabulary.words
@@ -70,7 +70,10 @@ class BPE():
                 for j in range(len(word) - 1):
                     pairs[word[j], word[j + 1]] += count
 
-        return self.bpe_vocabulary
+        with open(outputfile, 'w') as f:
+            for number, word in enumerate(self.bpe_vocabulary.words):
+                f.write(word + '\t' + str(self.bpe_vocabulary.counts[number]))
+        return outputfile, self.bpe_vocabulary
 
 
     def apply_bpe_to_file(self, input_file, vocabulary):
