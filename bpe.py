@@ -80,30 +80,34 @@ class BPE():
         '''
 
         print(input_file)
+        path = 'data/en-fr/preprocessed/bpe/'
         with open(input_file, 'r') as f:
             data = f.readlines()
-        output_file = 'data/en-fr/preprocessed/bpe/' + input_file + '_bpe'
+
+        'data/en-fr/preprocessed/train.en'
+        file_name = re.match(r'.+?\/(.+?$)', input_file).group(1)
+        output_file =path + file_name
 
         with open(output_file, 'w') as o:
             for line in data:
                 line = self.bpe_segmentation(line, vocabulary)
                 o.write(line)
 
-        return output_file
-
 
     def bpe_segmentation(self, sent: str, vocab: Dictionary) -> str:
         '''Encodes a sentence given a bpe dictionary'''
-        sorted_pbe_voc = sorted(vocab.words, key=len)
+        sorted_bpe_voc = sorted(vocab.words, key=len)
 
         def split_with_bpe_dict(word: str):
             if len(word) <= 1:
                 return word
             
             # look at longest byte pairs first
-            for pair in reversed(sorted_pbe_voc):
+            for pair in reversed(sorted_bpe_voc):
                 if pair in word:
+                    print(pair)
                     word_replaced = re.sub(pair, '<'+pair+'>', word)
+                    print(word_replaced)
                     left, right = word_replaced.split('<'+pair+'>')
                     encoded_left = split_with_bpe_dict(left)
                     encoded_right = split_with_bpe_dict(right)
