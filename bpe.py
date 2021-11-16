@@ -1,6 +1,6 @@
 from seq2seq.data.dictionary import Dictionary
-from collections import Counter
 from collections import defaultdict
+import random
 
 class BPE():
     def __init__(self, merges=2000):
@@ -77,7 +77,7 @@ class BPE():
         return self.bpe_vocabulary
 
 
-    def apply_bpe_to_file(self, input_file):
+    def apply_bpe_to_file(self, input_file, vocabulary):
         '''return file with applied bpe segmanetation with eow tag and whitespace between bp
         return: preprocessed/train.en -> preprocessed/bpe1_train.en
                 preprocessed/bpe1_train.en -> preprocessed/bpe2_train.en
@@ -90,15 +90,20 @@ class BPE():
 
         with open(output_file, 'w') as o:
             for line in data:
-                line = self.bpe_segmentation(line, self.bpe_vocabulary)
+                line = self.bpe_segmentation(line, vocabulary)
                 o.write(line)
+
+        return output_file
 
 
     def bpe_segmentation(self, string, vocab):
         pass
 
     def dropout(self, probability=0.5):
-        pass
+        for word in self.bpe_vocabulary:
+            # tidi
+            pass
+        # return: sample of vocab in same format, just less
 
 
 

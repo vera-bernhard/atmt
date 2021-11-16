@@ -82,19 +82,22 @@ def main(args):
     src_file = os.path.join(args.data, '{:s}.{:s}'.format('train', args.source_lang))
     tgt_file = os.path.join(args.data, '{:s}.{:s}'.format('train', args.target_lang))
 
-    bpe_src.apply_bpe_to_file(src_file)
-    bpe_tgt.apply_bpe_to_file(tgt_file)
-    # preprocessing.py file, vocab
+    src_bpe_file = bpe_src.apply_bpe_to_file(src_file, src_dict)
+    tgt_bpe_file = bpe_tgt.apply_bpe_to_file(tgt_file, tgt_dict)
+
+    os.system('python preprocess.py \
+    --source-lang fr \
+    --target-lang en \
+    --dest-dir data/en-de/preprocessed/bpe/ \
+    --vocab-src src_dict \
+    --vocab-trg tgt_dict')
 
     # Load datasets
     def load_data(split):
         src_file = os.path.join(args.data, '{:s}.{:s}'.format(split, args.source_lang))
         tgt_file = os.path.join(args.data, '{:s}.{:s}'.format(split, args.target_lang))
-        return Seq2SeqDataset(
-            src_file=src_file,
-            tgt_file=tgt_file,
-            src_dict=src_dict, tgt_dict=tgt_dict)
-        
+        return Seq2SeqDataset(src_file = bpe_src.apply_bpe_to_file(src_file)
+
     #train_dataset = load_data(split='train') if not args.train_on_tiny else load_data(split='tiny_train')
     #valid_dataset = load_data(split='valid')
     train_dataset = load_data(split='bpe_train')
@@ -117,13 +120,31 @@ def main(args):
 
     # Track validation performance for early stopping
     bad_epochs = 0
-    best_validate = float('inf')
+    best_validate = float('inf')src_file = bpe_src.apply_bpe_to_file(src_file)
+    tgt_file = bpe_tgt.apply_bpe_to_file(tgt_file)
+    os.system('python preprocess.py \
+    --source-lang fr \
+    --target-lang en \
+    --dest-dir data/en-de/preprocessed/bpe/ \
+    --vocab-src src_dict \
+    --vocab-trg tgt_dict')
+
 
     for epoch in range(last_epoch + 1, args.max_epoch):
 
         # call dropout & create new vocab
-        # droput retrun vocab
-        # aplly to file
+        new_vocab_src = bpe_src.dropout()
+        new_vocab_target = bpe_tgt.dropout()
+
+        # create new trainingdata
+        src_file = bpe_src.apply_bpe_to_file(src_file)
+        tgt_file = bpe_tgt.apply_bpe_to_file(tgt_file)
+        os.system('python preprocess.py \
+            --source-lang fr \
+            --target-lang en \
+            --dest-dir data/en-de/preprocessed/bpe/ \
+            --vocab-src src_dict \
+            --vocab-trg tgt_dict')
 
         # call preprocessing with new file and vocab (bpe class) to create pickle file
         # preprocessing.py new_vocab, preprocessed/bpe1.en -> prepared/bpe1.en
