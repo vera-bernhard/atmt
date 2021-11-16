@@ -90,8 +90,12 @@ class BPE():
 
         with open(output_file, 'w') as o:
             for line in data:
+                line = line.strip()
                 line = self.bpe_segmentation(line, vocabulary)
                 o.write(line)
+                o.write('\n')
+
+        return output_file
 
 
     def bpe_segmentation(self, sent: str, vocab: Dictionary) -> str:
@@ -103,11 +107,11 @@ class BPE():
                 return word
             
             # look at longest byte pairs first
-            for pair in reversed(sorted_bpe_voc):
-                if pair in word:
-                    print(pair)
-                    word_replaced = re.sub(pair, '<'+pair+'>', word)
-                    print(word_replaced)
+            for pair in reversed(sorted_pbe_voc):
+                if word == pair:
+                    return ['', word, '']
+                elif pair in word:
+                    word_replaced = re.sub(pair, '<'+pair+'>', word, count=1)
                     left, right = word_replaced.split('<'+pair+'>')
                     encoded_left = split_with_bpe_dict(left)
                     encoded_right = split_with_bpe_dict(right)
@@ -117,7 +121,8 @@ class BPE():
         result_sent = []  
         for word in sent.split(' '):
             word = word + '</w>'
-            word_bpe = ' '.join(list(self.flatten(split_with_bpe_dict(word))))
+            word_bpe_list = [x for x in list(self.flatten(split_with_bpe_dict(word))) if x is not None]
+            word_bpe = ' '.join(word_bpe_list)
             result_sent.append(word_bpe)
             
         result_sent = ' '.join(result_sent)
@@ -155,4 +160,4 @@ if __name__ == '__main__':
     
     myBPE = BPE()
     myBPE.create_vocabulary(src_dict)
-    myBPE.bpe_segmentation('je n&apos; ai jamais imaginé un seul instant que je serais désigné pour une fouille au corps complète .')
+    myBPE.bpe_segmentation('durant la fin du XXe siècle , la Yougoslavie était considérée comme un État voyou par les États @-@ Unis .', myBPE.bpe_vocabulary)
