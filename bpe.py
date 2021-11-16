@@ -92,13 +92,15 @@ class BPE():
         return output_file
 
 
-    def bpe_segmentation(self, sent: str) -> str:
-        sorted_pbe_voc = sorted(self.bpe_vocabulary.words, key=len)
+    def bpe_segmentation(self, sent: str, vocab: Dictionary) -> str:
+        '''Encodes a sentence given a bpe dictionary'''
+        sorted_pbe_voc = sorted(vocab.words, key=len)
 
         def split_with_bpe_dict(word: str):
             if len(word) <= 1:
                 return word
             
+            # look at longest byte pairs first
             for pair in reversed(sorted_pbe_voc):
                 if pair in word:
                     word_replaced = re.sub(pair, '<'+pair+'>', word)
@@ -119,8 +121,6 @@ class BPE():
         
         return result_sent
         
-
-        # remove several and trailing whitespaces (beginning and end)
     @classmethod
     def flatten(cls, L):
         for l in L:
