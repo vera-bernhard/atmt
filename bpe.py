@@ -1,10 +1,7 @@
 from seq2seq.data.dictionary import Dictionary
 from collections import defaultdict
-<<<<<<< HEAD
 import re
-=======
 import random
->>>>>>> 97369633690c48ae73f4a8a5d796de7222149dac
 
 class BPE():
     def __init__(self, merges=2000):
