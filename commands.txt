@@ -92,10 +92,10 @@ Evaluation
 --------------------------------
 # evaluate on tiny training
 cat \
-assignments/03/vera/translations/tiny/translations.p.txt \
+assignments/03/vera/translations/tiny/translation_tiny.p.txt \
 | sacrebleu data/en-fr/raw/test.en
 
 # evaluate on all training
 cat \
-assignments/03/vera/translations/all/translations.p.txt \
+assignments/03/vera/translations/all/translation_all.p.txt \
 | sacrebleu data/en-fr/raw/test.en
