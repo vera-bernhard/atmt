@@ -109,8 +109,8 @@ class BPE():
                     return ['', word, '']
                 elif pair in word:
                     try: 
-                        word_replaced = re.sub(pair, '<'+pair+'>', word, count=1)
-                    except re.error:
+                        word_replaced = re.sub(re.escape(pair), r'<'+pair+'>', word, count=1)
+                    except ValueError:
                         pdb.set_trace()
                     left, right = word_replaced.split('<'+pair+'>')
                     encoded_left = split_with_bpe_dict(left)
