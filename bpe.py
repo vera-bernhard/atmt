@@ -72,7 +72,7 @@ class BPE():
 
         with open(outputfile, 'w') as f:
             for number, word in enumerate(self.bpe_vocabulary.words):
-                f.write(word + '\t' + str(self.bpe_vocabulary.counts[number]))
+                f.write(word + ' ' + str(self.bpe_vocabulary.counts[number]) + '\n')
         return outputfile, self.bpe_vocabulary
 
 
@@ -134,7 +134,7 @@ class BPE():
         
         return result_sent
 
-    def dropout(self, probability=0.5):
+    def dropout(self, outputfile, probability=0.5):
         vocab = self.bpe_vocabulary
         new_vocab = Dictionary()
         number_random_samples = int(len(vocab) * probability)
@@ -146,7 +146,10 @@ class BPE():
             count = self.bpe_vocabulary.counts[element]
 
             new_vocab.add_word(word, count)
-        return new_vocab
+        with open(outputfile, 'w') as f:
+            for number, word in enumerate(self.bpe_vocabulary.words):
+                f.write(word + ' ' + str(self.bpe_vocabulary.counts[number]) + '\n')
+        return outputfile, new_vocab
 
         
     @classmethod
@@ -163,5 +166,5 @@ if __name__ == '__main__':
     tgt_dict = Dictionary.load('data/en-fr/prepared/dict.en')
     
     myBPE = BPE()
-    myBPE.create_vocabulary(src_dict)
+    myBPE.create_vocabulary(src_dict, 'ladidaa')
     myBPE.bpe_segmentation('durant la fin du XXe siècle , la Yougoslavie était considérée comme un État voyou par les États @-@ Unis .', myBPE.bpe_vocabulary)
