@@ -85,23 +85,20 @@ def main(args):
     src_bpe_file = bpe_src.apply_bpe_to_file(src_file, src_dict)
     tgt_bpe_file = bpe_tgt.apply_bpe_to_file(tgt_file, tgt_dict)
 
-    os.system('python preprocess.py \
-    --source-lang fr \
-    --target-lang en \
-    --dest-dir data/en-de/preprocessed/bpe/ \
-    --vocab-src src_dict \
-    --vocab-trg tgt_dict')
+    #TO DO: make sure that this is done on the right files...
+    os.system('python preprocess.py --source-lang fr --target-lang en --dest-dir data/en-de/preprocessed/bpe/ --vocab-src src_dict --vocab-trg tgt_dict')
 
     # Load datasets
     def load_data(split):
-        src_file = os.path.join(args.data, '{:s}.{:s}'.format(split, args.source_lang))
-        tgt_file = os.path.join(args.data, '{:s}.{:s}'.format(split, args.target_lang))
-        return Seq2SeqDataset(src_file = bpe_src.apply_bpe_to_file(src_file)
+        return Seq2SeqDataset(
+            src_file=os.path.join(args.data, '{:s}.{:s}'.format(split, args.source_lang)),
+            tgt_file=os.path.join(args.data, '{:s}.{:s}'.format(split, args.target_lang)),
+            src_dict=src_dict, tgt_dict=tgt_dict)
 
     #train_dataset = load_data(split='train') if not args.train_on_tiny else load_data(split='tiny_train')
     #valid_dataset = load_data(split='valid')
-    train_dataset = load_data(split='bpe_train')
-    valid_dataset = load_data(split='bpe_valid')
+    #train_dataset = load_data(split='bpe_train')
+    #valid_dataset = load_data(split='bpe_valid')
 
     # Build model and optimization criterion
     model = models.build_model(args, src_dict, tgt_dict)
@@ -120,25 +117,19 @@ def main(args):
 
     # Track validation performance for early stopping
     bad_epochs = 0
-    best_validate = float('inf')src_file = bpe_src.apply_bpe_to_file(src_file)
-    tgt_file = bpe_tgt.apply_bpe_to_file(tgt_file)
-    os.system('python preprocess.py \
-    --source-lang fr \
-    --target-lang en \
-    --dest-dir data/en-de/preprocessed/bpe/ \
-    --vocab-src src_dict \
-    --vocab-trg tgt_dict')
-
+    best_validate = float('inf')
 
     for epoch in range(last_epoch + 1, args.max_epoch):
 
         # call dropout & create new vocab
         new_vocab_src = bpe_src.dropout()
-        new_vocab_target = bpe_tgt.dropout()
+        new_vocab_tgt = bpe_tgt.dropout()
 
         # create new trainingdata
-        src_file = bpe_src.apply_bpe_to_file(src_file)
-        tgt_file = bpe_tgt.apply_bpe_to_file(tgt_file)
+        src_bpe_file = bpe_src.apply_bpe_to_file(src_file, new_vocab_src)
+        src_bpe_file = bpe_tgt.apply_bpe_to_file(tgt_file, new_vocab_tgt)
+
+        # TO DO make sure right file is done
         os.system('python preprocess.py \
             --source-lang fr \
             --target-lang en \
@@ -146,12 +137,9 @@ def main(args):
             --vocab-src src_dict \
             --vocab-trg tgt_dict')
 
-        # call preprocessing with new file and vocab (bpe class) to create pickle file
-        # preprocessing.py new_vocab, preprocessed/bpe1.en -> prepared/bpe1.en
-
-        #update train_dataset with new vocab & inputfile
-        # train_dataset = load_data('bpe')
-        # valid_dataset = load_data('bpe')
+        # TO DO right name
+        train_dataset = load_data('bpe')
+        valid_dataset = load_data('bpe')
 
         train_loader = \
             torch.utils.data.DataLoader(train_dataset, num_workers=1, collate_fn=train_dataset.collater,
@@ -176,7 +164,6 @@ def main(args):
                 continue
             model.train()
             #pdb.set_trace()
-
 
             output, _ = model(sample['src_tokens'], sample['src_lengths'], sample['tgt_inputs'])
             loss = \
