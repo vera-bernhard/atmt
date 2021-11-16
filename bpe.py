@@ -82,7 +82,7 @@ class BPE():
         print(input_file)
         with open(input_file, 'r') as f:
             data = f.readlines()
-        output_file = 'bpe_' + input_file
+        output_file = 'data/en-fr/preprocessed/bpe/' + input_file + '_bpe'
 
         with open(output_file, 'w') as o:
             for line in data:
@@ -120,21 +120,13 @@ class BPE():
         result_sent = re.sub(' +', ' ', result_sent).strip()
         
         return result_sent
-        
-    @classmethod
-    def flatten(cls, L):
-        for l in L:
-            if isinstance(l, list):
-                yield from cls.flatten(l)
-            else:
-                yield l
 
     def dropout(self, probability=0.5):
         vocab = self.bpe_vocabulary
         new_vocab = Dictionary()
         number_random_samples = int(len(vocab) * probability)
 
-        randomlist = random.sample(range(0, len(self.bpe_vocabulary)), number_random_samples)
+        random_list = random.sample(range(0, len(self.bpe_vocabulary)), number_random_samples)
 
         for element in random_list:
             word = self.bpe_vocabulary.words[element]
@@ -143,7 +135,14 @@ class BPE():
             new_vocab.add_word(word, count)
         return new_vocab
 
-
+        
+    @classmethod
+    def flatten(cls, L):
+        for l in L:
+            if isinstance(l, list):
+                yield from cls.flatten(l)
+            else:
+                yield l
 
 
 if __name__ == '__main__':
