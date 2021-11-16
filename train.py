@@ -89,7 +89,7 @@ def main(args):
     tgt_tiny_train = bpe_tgt.apply_bpe_to_file('data/en-fr/preprocessed/tiny_train.en', tgt_dict)
     tgt_valid = bpe_tgt.apply_bpe_to_file('data/en-fr/preprocessed/valid.en', tgt_dict)
 
-    os.system('python preprocess.py --source-lang fr --target-lang en --dest-dir data/en-de/preprocessed/bpe/ --train-prefix /data/en-fr/preprocessed/bpe/train --tiny-train-prefix /data/en-fr/preprocessed/bpe/tiny_train --valid-prefix /data/en-fr/preprocessed/bpe/valid --vocab-src src_dict_path --vocab-trg tgt_dict_path')
+    os.system('python preprocess.py --source-lang fr --target-lang en --dest-dir data/en-de/preprocessed/bpe/ --train-prefix /data/en-fr/preprocessed/bpe/train --tiny-train-prefix /data/en-fr/preprocessed/bpe/tiny_train --valid-prefix /data/en-fr/preprocessed/bpe/valid --vocab-src data/en-fr/preprocessed/bpe/dict.fr --vocab-trg data/en-fr/preprocessed/bpe/dict.en')
 
     # Load datasets
     def load_data(src_file, tgt_file, src_dict, tgt_dict):
