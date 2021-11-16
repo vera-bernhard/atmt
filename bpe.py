@@ -79,13 +79,11 @@ class BPE():
                 preprocessed/bpe1_train.en -> preprocessed/bpe2_train.en
         '''
 
-        print(input_file)
         path = 'data/en-fr/preprocessed/bpe/'
         with open(input_file, 'r') as f:
             data = f.readlines()
 
-        'data/en-fr/preprocessed/train.en'
-        file_name = re.match(r'.+?\/(.+?$)', input_file).group(1)
+        file_name = re.match(r'data/en-fr/preprocessed/(.+?$)', input_file).group(1)
         output_file =path + file_name
 
         with open(output_file, 'w') as o:
@@ -107,7 +105,7 @@ class BPE():
                 return word
             
             # look at longest byte pairs first
-            for pair in reversed(sorted_pbe_voc):
+            for pair in reversed(sorted_bpe_voc):
                 if word == pair:
                     return ['', word, '']
                 elif pair in word:
