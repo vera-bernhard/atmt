@@ -13,6 +13,10 @@ from seq2seq.data.dictionary import Dictionary
 from seq2seq.data.dataset import Seq2SeqDataset, BatchSampler
 from seq2seq.models import ARCH_MODEL_REGISTRY, ARCH_CONFIG_REGISTRY
 
+from bpe import BPE
+
+import pdb
+
 def get_args():
     """ Defines training-specific hyper-parameters. """
     parser = argparse.ArgumentParser('Sequence to Sequence Model')
@@ -85,14 +89,15 @@ def main(args):
     tgt_tiny_train = bpe_tgt.apply_bpe_to_file('data/en-fr/preprocessed/tiny_train.en', tgt_dict)
     tgt_valid = bpe_tgt.apply_bpe_to_file('data/en-fr/preprocessed/valid.en', tgt_dict)
 
-    os.system('python preprocess.py --source-lang fr --target-lang en --dest-dir data/en-de/preprocessed/bpe/ --train-prefix /data/en-fr/preprocessed/bpe/train --tiny-train-prefix /data/en-fr/preprocessed/bpe/tiny_train --valid-prefix /data/en-fr/preprocessed/bpe/valid --vocab-src data/en-fr/preprocessed/bpe/dict.fr --vocab-trg data/en-fr/preprocessed/bpe/dict.en')
+    os.system('python preprocess.py --source-lang fr --target-lang en --dest-dir data/en-de/preprocessed/bpe/ --train-prefix data/en-fr/preprocessed/bpe/train --tiny-train-prefix data/en-fr/preprocessed/bpe/tiny_train --valid-prefix data/en-fr/preprocessed/bpe/valid --vocab-src data/en-fr/preprocessed/bpe/dict.fr --vocab-trg data/en-fr/preprocessed/bpe/dict.en')
 
     # Load datasets
     def load_data(src_file, tgt_file, src_dict, tgt_dict):
         return Seq2SeqDataset(
-            src_file=os.path.join(args.data, '{:s}.{:s}'.format(split, args.source_lang)),
-            tgt_file=os.path.join(args.data, '{:s}.{:s}'.format(split, args.target_lang)),
-            src_dict=src_dict, tgt_dict=tgt_dict)
+            src_file=src_file,
+            tgt_file=tgt_file,
+            src_dict=src_dict,
+            tgt_dict=tgt_dict)
 
     #train_dataset = load_data(split='train') if not args.train_on_tiny else load_data(split='tiny_train')
     #valid_dataset = load_data(split='valid')
@@ -121,24 +126,19 @@ def main(args):
     for epoch in range(last_epoch + 1, args.max_epoch):
 
         # call dropout & create new vocab
-        new_vocab_src = bpe_src.dropout()
-        new_vocab_tgt = bpe_tgt.dropout()
+        new_vocab_path_src, new_vocab_src = bpe_src.dropout('data/en-fr/preprocessed/bpe/dict.fr')
+        new_vocab_path_tgt, new_vocab_tgt = bpe_tgt.dropout('data/en-fr/preprocessed/bpe/dict.en')
 
 
         # create new trainingdata
-        src_ = bpe_src.apply_bpe_to_file(src_file, new_vocab_src)
-        tgt_ = bpe_tgt.apply_bpe_to_file(tgt_file, new_vocab_tgt)
+        src_file = bpe_src.apply_bpe_to_file(src_file, new_vocab_src)
+        tgt_file = bpe_tgt.apply_bpe_to_file(tgt_file, new_vocab_tgt)
 
-        # TO DO make sure right file is done
-        os.system('python preprocess.py \
-            --source-lang fr \
-            --target-lang en \
-            --dest-dir data/en-de/preprocessed/bpe/ \
-            --vocab-src src_dict \
-            --vocab-trg tgt_dict')
+        os.system(
+            'python preprocess.py --source-lang fr --target-lang en --dest-dir data/en-de/preprocessed/bpe/ --train-prefix data/en-fr/preprocessed/bpe/train --tiny-train-prefix data/en-fr/preprocessed/bpe/tiny_train --valid-prefix data/en-fr/preprocessed/bpe/valid --vocab-src data/en-fr/preprocessed/bpe/dict.fr --vocab-trg data/en-fr/preprocessed/bpe/dict.en')
 
-        train_dataset = load_data(src_file, tgt_file, new_vocab_src, new_vocab_tgt)
-        valid_dataset = load_data(src_file, tgt_file, new_vocab_src, new_vocab_tgt)
+        train_dataset = load_data(src_file, tgt_file, new_vocab_path_src, new_vocab_path_tgt)
+        valid_dataset = load_data(tgt_file, tgt_file, new_vocab_path_src, new_vocab_path_tgt)
 
         train_loader = \
             torch.utils.data.DataLoader(train_dataset, num_workers=1, collate_fn=train_dataset.collater,
